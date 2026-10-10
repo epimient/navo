@@ -39,6 +39,10 @@ npm run test:terminal  # 4 pruebas PTY con Python 3 sobre dist/cli.js
 
 ## Estado del repo
 
-- Aún no es repositorio git (no hay `.git`): no asumas `git status` ni historial.
+- Repositorio git con remoto `https://github.com/epimient/navo.git` (rama `main`).
+  Consulta `git status`/`git diff` antes de tocar archivos; no hagas commit ni push
+  salvo que se pida explícitamente.
 - No hay CI, pre-commit ni formatter: la verificación recae en los comandos de arriba.
-- `.gitignore`: `node_modules/`, `dist/`, `*.tgz` — pero `dist/` está versionado en el tarball npm.
+- `.gitignore`: `node_modules/`, `dist/`, `*.tgz`, logs, cachés, `.env` y artefactos
+  de editor/OS — pero `dist/` está versionado en el tarball npm (vía `files` en
+  `package.json`), no en git.
