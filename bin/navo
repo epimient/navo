@@ -1,0 +1,9 @@
+#!/bin/sh
+# Resolve the installed symlink without changing the user's working directory.
+NAVO_ENTRY=$(readlink -f -- "$0") || exit 1
+NAVO_ROOT=$(dirname -- "$(dirname -- "$NAVO_ENTRY")")
+if ! command -v node >/dev/null 2>&1; then
+    printf '%s\n' 'Navo necesita Node.js 22 o superior en PATH.' >&2
+    exit 1
+fi
+exec node "$NAVO_ROOT/dist/cli.js" "$@"

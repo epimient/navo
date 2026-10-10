@@ -1,0 +1,50 @@
+{
+  "name": "navo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Explorador y lanzador de aplicaciones de terminal para Linux",
+  "license": "MIT",
+  "keywords": [
+    "terminal",
+    "launcher",
+    "tui",
+    "cli",
+    "linux",
+    "ink",
+    "react"
+  ],
+  "bin": {
+    "navo": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "INSTALL.md",
+    "CONTRIBUTING.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "start": "node dist/cli.js",
+    "dev": "node --import tsx src/cli.tsx",
+    "test": "node --import tsx --test test/*.test.ts",
+    "check": "tsc --noEmit",
+    "test:terminal": "python3 test/terminal.py tui && python3 test/terminal.py cli && python3 test/terminal.py interrupt && python3 test/terminal.py quit"
+  },
+  "dependencies": {
+    "ink": "^6.0.1",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0"
+  }
+}
