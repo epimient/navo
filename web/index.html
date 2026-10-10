@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navo — tus aplicaciones, a mano</title>
+<meta name="description" content="Navo, explorador y lanzador de aplicaciones de terminal para Linux. Descubre los ejecutables de tu PATH, búscalos, márcalos y ejecútalos sin salir de la tecla Enter.">
+<meta property="og:title" content="Navo — tus aplicaciones, a mano">
+<meta property="og:description" content="Explorador y lanzador de aplicaciones de terminal para Linux.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2319140F'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%23E9B65C' stroke-width='2'/%3E%3Crect x='4.5' y='4.5' width='7' height='7' fill='%23E9B65C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#principal">Saltar al contenido</a>
+
+<header class="topbar">
+  <span class="wordmark">▓▒░ NAVO</span>
+  <nav>
+    <a href="https://github.com/epimient/navo">[ github ]</a>
+    <a href="https://github.com/epimient/navo/blob/main/README.md">[ docs ]</a>
+  </nav>
+</header>
+
+<main id="principal">
+  <section class="hero">
+    <p class="eyebrow">explorador y lanzador de terminal · linux</p>
+    <pre class="logo" aria-label="NAVO en arte ASCII">
+ ███╗   ██╗ █████╗ ██╗   ██╗ ██████╗ 
+ ████╗  ██║██╔══██╗██║   ██║██╔═══██╗
+ ██╔██╗ ██║███████║██║   ██║██║   ██║
+ ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║   ██║
+ ██║ ╚████║██║  ██║ ╚████╔╝ ╚██████╔╝
+ ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═════╝ </pre>
+    <p class="tagline">tus aplicaciones, a mano.</p>
+    <p class="lead">Descubre los ejecutables de tu <span class="kw">PATH</span>, búscalos,
+    márcalos y ejecútalos con tus argumentos — sin salir del teclado.
+    Todo en tu terminal, sin shell de por medio.</p>
+
+    <div class="hero-actions">
+      <a class="btn" href="https://github.com/epimient/navo">ver en github</a>
+      <button class="btn btn-copy" id="copyInstall" type="button">copiar instalación</button>
+    </div>
+  </section>
+
+  <section class="install" aria-labelledby="instalacion">
+    <h2 id="instalacion" class="section-title"><span class="sec">[</span> instala <span class="sec">]</span></h2>
+    <div class="cmd" id="installCmd">
+<pre>$ git clone https://github.com/epimient/navo.git navo
+$ cd navo &amp;&amp; ./install.sh
+$ navo</pre>
+      <button class="copy tiny" id="copyCmd" type="button" aria-label="copiar comando de instalación">copiar</button>
+    </div>
+    <p class="note">Requiere <b>Node.js 22+</b>. Se instala en <span class="kw">~/.local/bin</span>
+    sin <span class="kw">sudo</span> y sin tocar tu configuración.</p>
+  </section>
+
+  <section class="demo" aria-labelledby="demo">
+    <h2 id="demo" class="section-title"><span class="sec">[</span> así se ve <span class="sec">]</span></h2>
+    <figure class="tui" aria-label="interfaz de Navo funcionando">
+      <figcaption class="tui-top"><span class="tui-dot" aria-hidden="true"></span><span>navo — interfaz</span></figcaption>
+      <div class="tui-body">
+        <div class="tui-head">▓▒░ <b>NAVO</b>&nbsp;&nbsp;&nbsp;tus aplicaciones, a mano</div>
+        <div class="tui-row tabs">
+          <span class="view selected"> 1·Biblioteca </span><span class="view"> 2·Favoritos </span><span class="viewkey"> ←→ navegar</span>
+        </div>
+        <div class="tui-row dim">BUSCAR / nombre o categoría<span class="cursor" aria-hidden="true"></span></div>
+        <div class="tui-row dim">6 resultados / 3802 ejecutables</div>
+        <div class="tui-row colhead">  APLICACIÓN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TIPO&nbsp;&nbsp;CATEGORÍA</div>
+        <div class="tui-list" id="tuiList"><!-- generado --></div>
+        <div class="tui-row dim" id="tuiPath">&nbsp;</div>
+        <div class="tui-row dim">Enter o 'o': preparar y lanzar / f favorito / d quitar</div>
+        <div class="tui-row dim"> / buscar&nbsp;&nbsp;↑↓ mover&nbsp;&nbsp;1-2 o ←→ vistas&nbsp;&nbsp;q salir</div>
+      </div>
+    </figure>
+    <p class="note">La TUI real, con <b>pausa tras lanzar</b>: al cerrar la app lees su salida
+    y vuelves a Navo con <span class="kw">Enter</span>.</p>
+  </section>
+
+  <section class="features" aria-labelledby="caracteristicas">
+    <h2 id="caracteristicas" class="section-title"><span class="sec">[</span> características <span class="sec">]</span></h2>
+    <ul class="grid">
+      <li class="card">
+        <h3>Biblioteca</h3>
+        <p>Los ejecutables de tu <span class="kw">PATH</span> deduplicados y ordenados, más tus
+        registros manuales y favoritos. Nada de volcados imposibles: búscalos por nombre,
+        categoría o descripción.</p>
+      </li>
+      <li class="card">
+        <h3>Lanzamiento seguro</h3>
+        <p><span class="kw">shell: false</span> y argumentos literales: ni pipes, ni
+        redirecciones, ni sustituciones. Lo que escribes es lo que ejecuta.</p>
+      </li>
+      <li class="card">
+        <h3>Preparación CLI/TUI</h3>
+        <p>Elige el modo antes de lanzar, pásale argumentos en pantalla y, al terminar, Navo
+        te deja leer la salida antes de volver con <span class="kw">Enter</span>.</p>
+      </li>
+      <li class="card">
+        <h3>Favoritos</h3>
+        <p>Marca con <span class="kw">f</span>. Siempre aparecen primero. Tienen su propia
+        vista: <span class="kw">2</span>.</p>
+      </li>
+      <li class="card">
+        <h3>Ocultar sin romper</h3>
+        <p><span class="kw">d</span> quita lo que no usas de la vista. No desinstala nada:
+        queda a salvo en <span class="kw">config.json</span>.</p>
+      </li>
+      <li class="card">
+        <h3>Reescaneo en caliente</h3>
+        <p>Detecta altas, bajas y rutas cambiadas cada 30 s y al volver de una app.
+        Tu <span class="kw">PATH</span> siempre al día.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="keys" aria-labelledby="atajos">
+    <h2 id="atajos" class="section-title"><span class="sec">[</span> atajos <span class="sec">]</span></h2>
+    <ul class="keys-grid">
+      <li><span class="key">1</span><span class="key">2</span><span>&nbsp;vistas</span></li>
+      <li><span class="key">j</span><span class="key">k</span><span>&nbsp;mover</span></li>
+      <li><span class="key">/</span><span>&nbsp;buscar</span></li>
+      <li><span class="key">f</span><span>&nbsp;favorito</span></li>
+      <li><span class="key">a</span><span>&nbsp;agregar</span></li>
+      <li><span class="key">d</span><span>&nbsp;ocultar</span></li>
+      <li><span class="key">Enter</span><span>&nbsp;lanzar</span></li>
+      <li><span class="key">r</span><span>&nbsp;reescanear</span></li>
+      <li><span class="key">q</span><span>&nbsp;salir</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="rules" aria-hidden="true">──────────────────────────────────────────</div>
+  <p>© 2026 Navo · MIT License</p>
+  <nav>
+    <a href="https://github.com/epimient/navo">[ github ]</a>
+    <a href="https://github.com/epimient/navo/issues">[ issues ]</a>
+  </nav>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
